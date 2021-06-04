@@ -1,1 +1,1 @@
-# django_for_professional
+# book_store
