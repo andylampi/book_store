@@ -1,0 +1,20 @@
+version: "3.7"
+services: #first container
+  web:
+    build: . #Path Where build the image
+    command: python manage.py runserver 0.0.0.0:8000 #run django's webserver
+    volumes: 
+        - .:/book_store/ # store for code
+    ports: 
+        - 8000:8000 #port for link to django's webserver
+    depends_on: 
+        - db
+  db: #second container
+    image: postgres:11 #select db
+    volumes: 
+        - postgres_data:/var/lib/postgresql/data/ #store for db
+    environment: 
+        - "POSTGRES_HOST_AUTH_METHOD=trust"
+
+volumes: 
+    postgres_data:
