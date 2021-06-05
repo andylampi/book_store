@@ -1,6 +1,8 @@
+from users.forms import UserCreation
 from django.test import TestCase
 from django.contrib.auth import get_user_model
-
+from django.urls.base import reverse
+from .forms import UserCreation
 
 #Unit test
 class TestUser(TestCase):
@@ -30,3 +32,22 @@ class TestUser(TestCase):
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_active)
     
+
+class TestRegistrationTemplate(TestCase):
+
+    def setUp(self):
+        url = reverse("signup")
+        self.response = self.client.get(url)
+
+    def test_Template_signup(self):
+        self.assertTemplateUsed(self.response, "registration/signup.html")
+        self.assertContains(self.response, "Signup")
+        self.assertTemplateNotUsed(self.response, "login.html")
+        self.assertNotContains(self.response, "Login")
+    
+    def test_form(self):
+        form = self.response.context.get("form")
+        self.assertIsInstance(form, UserCreation)
+        self.assertContains(self.response, "csrfmiddleware")
+
+        
