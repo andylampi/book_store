@@ -37,9 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     #local
     'users',
-    'pages'
+    'pages',
+    #3party
+    'crispy_forms',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount'
 
 ]
 
@@ -127,7 +133,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (str(BASE_DIR.joinpath("static")),)
+STATIC_ROOT = (str(BASE_DIR.joinpath("staticfiles")))
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -138,4 +150,21 @@ AUTH_USER_MODEL = "users.UserModel"
 
 #Login Redirect
 LOGIN_REDIRECT_URL ="home"
-LOGOUT_REDIRECT_URL ="home"
+ACCOUNT_LOGOUT_REDIRECT ="home"
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+SITE_ID = 1
+
+#authentication
+AUTHENTICATION_BACKEND = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend"
+)
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
