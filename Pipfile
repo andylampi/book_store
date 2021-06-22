@@ -13,3 +13,6 @@ django-allauth = "*"
 
 [requires]
 python_version = "3.9"
+
+[packages.environs]
+extras = [ "django",]

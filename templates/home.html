@@ -1,5 +1,5 @@
 {% extends "_base.html" %}
-
+{% load socialaccount %}
 {% block title %}HomePage{% endblock title %}
 
 {% block content %}
@@ -10,5 +10,7 @@
 {% else %}
 <h3><a href="{% url 'account_login' %}">Login</a></h3>
 <h3><a href="{% url 'account_signup' %}">SignUp</a></h3>
+<h3><a href="{% provider_login_url 'github' %}">SignUp or LogIn by Github</a></h3>
 {% endif %}
+{{ auth_error }} 
 {% endblock content %}

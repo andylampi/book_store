@@ -9,6 +9,9 @@ services: #first container
         - 8000:8000 #port for link to django's webserver
     depends_on: 
         - db
+    environment: 
+        - "SECRET_KEY=django-insecure-whtpnu__9n2*13=e4siimi!@n2np&&8zy3yt#bj4%a1#rk_!t1"
+        - "DEBUG=True"
   db: #second container
     image: postgres:11 #select db
     volumes: 
